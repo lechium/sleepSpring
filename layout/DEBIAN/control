@@ -1,0 +1,9 @@
+Package: com.nito.sleepspring
+Name: sleep alert respring
+Depends: mobilesubstrate (>=0.0.2-1)
+Version: 1.1
+Architecture: appletvos-arm64
+Description: adds the ability to respring backboardd right from the built in sleep alert
+Maintainer: Kevin Bradley
+Author: Kevin Bradley
+Section: System
