@@ -1,10 +1,6 @@
 #import "NSTask.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "UIView+RecursiveFind.h"
-#include <sys/wait.h>
-#include <sys/fcntl.h>
-
 
 
 @interface UIAlertController (slide) 
@@ -13,6 +9,7 @@
 
 %hook UIAlertController
 
+//an alternate but no long used approach to achieve the same goal, i think may change the ordering of the alert options
 +(id)alertControllerWithTitle:(id)arg1 message:(id)arg2 preferredStyle:(long long)arg3 {
 
     %log;
@@ -27,11 +24,9 @@
 - (void)viewWillAppear:(BOOL)animated {
 
     %orig;
-
     [self slideRespringIntoSleepAlertIfNecessary];
     
 }
-
 
 %new - (void)slideRespringIntoSleepAlertIfNecessary {
 
@@ -39,7 +34,6 @@
        NSString *sleepMessage = NSLocalizedString(@"PBSystemMenuSleepNowMessage", nil);
        if ([self.title isEqualToString:sleepTitle] && [self.message isEqualToString:sleepMessage]){
              self.title = [NSString stringWithFormat:@"Respring or %@", sleepTitle];
-             //self.message = [NSString stringWithFormat:@"weaoutchea & %@", sleepMessage];
              UIAlertAction *respringAction = [UIAlertAction actionWithTitle:@"Respring" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                    [NSTask launchedTaskWithLaunchPath:@"/usr/bin/killall" arguments:@[@"-9", @"backboardd"]];
              }];
@@ -50,16 +44,6 @@
             [self addAction:ldrestartAction];
         }
 }
-
-%end
-
-%hook PBAppDelegate
-
-- (void)handleTVLongPressEvent:(id)arg1 { %log; %orig; }
-- (void)handleTVTripleTapEvent { %log; %orig; }
-- (void)handleTVDoubleTapEvent 	{ %log; %orig; }
-- (void)handleTVTapEventAsThirdTapEventInAppSwitcher { %log; %orig; }
-- (void)handleTVTapEvent { %log; %orig; }
 
 %end
 

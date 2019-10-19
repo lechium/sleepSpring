@@ -8,7 +8,7 @@ DEBUG=0
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = sleepSpring
-sleepSpring_FILES = sleepSpring.xm UIView+RecursiveFind.m
+sleepSpring_FILES = sleepSpring.xm
 sleepSpring_LIBRARIES = substrate
 sleepSpring_FRAMEWORKS = Foundation UIKit
 sleepSpring_PRIVATE_FRAMEWORKS = MediaRemote
